@@ -34,7 +34,6 @@ echo "Content outside groups"
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeArticle
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeBookPage
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeHelpPage
-drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeFeed
 
 # Organisations
 drush mi --instrument --feedback="30 seconds" C4dMigrateCreateCSVNodeOrganisations
@@ -68,6 +67,9 @@ drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGDiscussio
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGEvent
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGPhotoalbum
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGTask
+
+# Feeds
+drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeFeed
 
 echo
 echo "#########################################################################"
