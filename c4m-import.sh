@@ -5,6 +5,20 @@
 # --------------------------------------------------------------------------- #
 
 
+
+# Helper function to stop the process early.
+function quit_early {
+  echo
+  echo "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
+  echo "-x-                          QUIT EARLY                               -x-"
+  echo "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
+  echo
+  
+  exit 0
+}
+
+
+
 # Make sure no demo content module enabled.
 drush -y dis c4m_demo
 
@@ -13,10 +27,10 @@ drush -y dis admin_menu
 drush -y en toolbar
 echo
 
-
 # Make sure that migrate detected all migration scripts.
 drush ms
 echo
+
 
 # Users & Roles
 echo "Users & Roles"
@@ -24,10 +38,9 @@ drush mi --instrument --feedback="30 seconds" C4dMigrateImportRoles
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportUsers
 echo
 
-# Topics + Regions & countries
-echo "Global taxonomy"
-drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeTopic
-echo
+# Topics
+echo "Topics"
+drush mi --instrument --feedback="30 seconds" C4dMigrateCreateCSVTermTopic
 
 # Content outside groups
 echo "Content outside groups"
@@ -39,6 +52,7 @@ drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeHelpPage
 drush mi --instrument --feedback="30 seconds" C4dMigrateCreateCSVNodeOrganisations
 
 # Groups & Projects
+echo "Groups & Projects"
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeGroup
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeProject
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportOGFeatures
@@ -49,7 +63,14 @@ drush mi --instrument --feedback="30 seconds" C4dMigrateImportOGUserRoles
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportVocabOGCategories
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportVocabOGTags
 
+# Topics nodes
+echo "Content types that need Groups"
+drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeTopic
+drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeFeed
+
+
 # Content inside groups
+echo "Content within Groups & Projects"
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeOGDocument
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeOGMinisite
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeOGDiscussion
@@ -68,24 +89,11 @@ drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGEvent
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGPhotoalbum
 drush mi --instrument --feedback="30 seconds" C4dMigrateImportCommentOGTask
 
-# Feeds
-drush mi --instrument --feedback="30 seconds" C4dMigrateImportNodeFeed
+
 
 echo
 echo "#########################################################################"
 echo "#                             COMPLETE                                  #"
 echo "#########################################################################"
-echo
-exit 0
-
-
-
-
-
-# Groups & Projects
-echo
-echo "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
-echo "-x-                          QUIT EARLY                               -x-"
-echo "-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-x-"
 echo
 exit 0
